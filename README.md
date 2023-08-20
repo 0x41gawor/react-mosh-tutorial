@@ -190,3 +190,126 @@ function ListGroup() {
 
 export default ListGroup;
 ```
+
+## Passing data via Props
+App.tsx
+```typescript
+import ListGroup from "./components/ListGroup";
+
+function App() {
+  let items = ["New York", "San Francisco", "Paris", "Berlin", "Tokyo"];
+
+  return (
+    <div>
+      <ListGroup items={items} heading="Cities" />
+    </div>
+  );
+}
+
+export default App;
+```
+ListGroup.tsx
+```typescript
+import { useState } from "react";
+
+interface Props {
+    items: string[];
+    heading: string;
+}
+
+function ListGroup({items, heading}: Props) {
+
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  return (
+    <>
+      <h1>{heading}</h1>
+      <ul className="list-group">
+        {items.map((item, index) => (
+          <li
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+            key={item}
+            onClick={() => setSelectedIndex(index)}
+          >
+            {item}
+          </li>
+        ))}
+        ł
+      </ul>
+    </>
+  );
+}
+
+export default ListGroup;
+```
+
+## Passing functions via Props
+To pozwala miec nam handler w componencie wyzej na rzecz ktora dzieje sie w komponencie nizej </br>
+Wyzej, nizej - w sensie w hierarchi Virtual DOM.
+
+App.tsx
+```typescript
+import ListGroup from "./components/ListGroup";
+
+function App() {
+  let items = ["New York", "San Francisco", "Paris", "Berlin", "Tokyo"];
+
+  const handleSelectItem = (item: string) => {
+    console.log(item)
+  }
+
+  return (
+    <div>
+      <ListGroup items={items} heading="Cities" onSelectItem={handleSelectItem} />
+    </div>
+  );
+}
+
+export default App;
+```
+ListGroup.tsx
+```typescript
+import { useState } from "react";
+
+interface Props {
+  items: string[];
+  heading: string;
+  // (item: string) => void
+  onSelectItem: (item: string) => void;
+}
+
+function ListGroup({ items, heading, onSelectItem }: Props) {
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  return (
+    <>
+      <h1>{heading}</h1>
+      <ul className="list-group">
+        {items.map((item, index) => (
+          <li
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+            key={item}
+            onClick={() => {
+              setSelectedIndex(index);
+              onSelectItem(item);
+            }}
+          >
+            {item}
+          </li>
+        ))}
+        ł
+      </ul>
+    </>
+  );
+}
+
+export default ListGroup;
+```
