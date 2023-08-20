@@ -313,3 +313,43 @@ function ListGroup({ items, heading, onSelectItem }: Props) {
 
 export default ListGroup;
 ```
+
+## Passing as a children
+
+Alert.tsx
+```typescript
+import { ReactNode } from "react";
+
+interface Props {
+    children: ReactNode;
+}
+
+const Alert = ( { children }: Props) => {
+    return (
+        <div className="alert alert-primary">{children}</div>
+    )
+}
+
+export default Alert
+```
+App.tsx
+```typescript
+import Alert from "./components/Alert";
+
+function App() {
+
+  return (
+    <div>
+      <Alert> 
+          <span>Hello World</span>
+      </Alert>
+    </div>
+  );
+}
+
+export default App;
+```
+
+
+# TO NIE KONIEC
+Zostały mi dwa ostatnie rozdziały czyli button czyli od 1h:07min
