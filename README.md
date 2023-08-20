@@ -68,3 +68,87 @@ function ListGroup() {
 export default ListGroup;
 ```
 
+## Conditional rendering
+
+```typescript
+function ListGroup() {
+  const items = ["New York", "San Francisco", "Paris", "Berlin", "Tokyo"];
+
+  const mensaje = items.length === 0 ? <p>No item found</p> : null;
+  // this below is very common technique in React Community to render componenets dynamically
+  const mensaje2 = items.length === 0 && <p>No item found</p>;
+
+  return (
+    <>
+      <h1>List</h1>
+      {mensaje}
+      {mensaje2}
+      <ul className="list-group">
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+        ł
+      </ul>
+    </>
+  );
+}
+
+export default ListGroup;
+```
+
+## OnClick simple event
+```typescript
+function ListGroup() {
+  const items = ["New York", "San Francisco", "Paris", "Berlin", "Tokyo"];
+
+  return (
+    <>
+      <h1>List</h1>
+      <ul className="list-group">
+        {items.map((item, index) => (
+          <li
+            className="list-group-item"
+            key={item}
+            onClick={() => console.log("Clicked " + item, index)}
+          >
+            {item}
+          </li>
+        ))}
+        ł
+      </ul>
+    </>
+  );
+}
+
+export default ListGroup;
+```
+another version
+```typescript
+import { MouseEvent } from "react";
+
+function ListGroup() {
+  const items = ["New York", "San Francisco", "Paris", "Berlin", "Tokyo"];
+
+  const handleOnClick = (event: MouseEvent) => console.log(event)
+
+  return (
+    <>
+      <h1>List</h1>
+      <ul className="list-group">
+        {items.map((item) => (
+          <li
+            className="list-group-item"
+            key={item}
+            onClick={handleOnClick}
+          >
+            {item}
+          </li>
+        ))}
+        ł
+      </ul>
+    </>
+  );
+}
+
+export default ListGroup;
+```
